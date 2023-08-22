@@ -3,6 +3,9 @@
 # To do:
 # 1. test 300s
 
+sudo apt update
+sudo apt install -y jq
+
 # sudo chmod -R 755 /opt/elasticsearch-7.14.2
 # sudo chmod -R 777 /opt/elasticsearch-7.14.2/logs
 # sudo chmod -R 777 /opt/elasticsearch-7.14.2/config
@@ -42,7 +45,6 @@ while true; do
     fi
 done
 
-
 echo "y" | /opt/elasticsearch-7.14.2/bin/elasticsearch-setup-passwords auto > password_temp_1.txt
 grep "PASSWORD" password_temp_1.txt | sed 's/^.*PASSWORD //' > password_temp_2.txt
 awk '{print "\"" $1 "\": \"" $3 "\","}' password_temp_2.txt | sed '$ s/.$//' | awk 'BEGIN {print "{"} {print} END {print "}"}' > password.json
@@ -50,16 +52,12 @@ awk '{print "\"" $1 "\": \"" $3 "\","}' password_temp_2.txt | sed '$ s/.$//' | a
 rm password_temp_1.txt password_temp_2.txt
 sudo mv password.json /opt/
 
-
 elastic_password=$(jq -r '.elastic' /opt/password.json)
 
-
 if curl -u "elastic:$elastic_password" "$target_host:$target_port" | grep -q "You Know, for Search"; then
-    echo "Elastic Search deployed successfully!"
+    echo "ElasticSearch deployed successfully!"
 else
     echo "Alert! Maybe there are some errors. please check /opt/elasticsearch-7.14.2/logs/elasticsearch.log"
 fi
 
-
-
-
+# config the kibana
