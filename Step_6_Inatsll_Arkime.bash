@@ -13,7 +13,7 @@
 # Example Usages:
 # ./Step_6_Inatsll_Arkime.bash
 # 
-# IMPORTANT: It will reboot after this script finishes, please save other things.
+# IMPORTANT: Nothing.
 
 source ./utils.bash
 
