@@ -40,7 +40,7 @@ source ./Step_5_Install_Zeek.bash
 
 It is still very convenient here. Although it is published to a private IP, all hosts in the intranet that can access this hostIP can view these dashboards.
 
-## some theoretical basis
+## Some theoretical basis
 
 According to the first chapter of the book [The Practice of Network Security Monitoring](https://nostarch.com/nsm), the data sources of Network Security Monitoring (NSM) can be roughly divided into four categories (originally 7 categories , Session data, Statistical data, and Metadata are generally not as important as the following four categories):
 
@@ -59,7 +59,7 @@ From the perspective of this Dashboard, we show alert data, transcation data, an
 
 This dashboard is from FileBeat, where the content of the panels and the number of panels are editable, here is four panels with four tuple(src.ip, src.port, dst.ip and dst.port) and MMS events, and in the lower right corner is some metadata detection provided by zeek (this image is detecting if the host is a container or not)
 
-# Events page
+## Events page
 
 > I forget to take a screenshot.
 
