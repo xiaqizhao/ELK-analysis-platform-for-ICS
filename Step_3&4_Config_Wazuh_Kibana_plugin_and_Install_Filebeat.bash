@@ -42,14 +42,14 @@ curl -s -o /dev/null -u "elastic:$elastic_password" "$target_host:$target_port_f
 
 # Modify the file generated above
 kibana_plugin_config_file="/opt/kibana-7.14.2-linux-x86_64/data/wazuh/config/wazuh.yml"
-modify_config "$kibana_plugin_config_file" "url: https:\/\/localhost" "url: https://$host_ipv4_address"
+modify_config "$kibana_plugin_config_file" "url: https:\/\/localhost" "     url: https://$host_ipv4_address"
 
 # Here is a simple lock to ensure that the files needed for subsequent operations are correctly generated
 
 counter=0
 time_limitation=$time_limitation_for_kibana_check
 while true; do
-    modify_config "$kibana_plugin_config_file" "url: https:\/\/localhost" "url: https://$host_ipv4_address"
+    modify_config "$kibana_plugin_config_file" "url: https:\/\/localhost" "     url: https://$host_ipv4_address"
     if [ $? -ne 0 ]; then
         echo "Generating configuration file failed. Running curl command to generate again..."
         curl -s -u "elastic:$elastic_password" "$target_host:$target_port_for_kibana/app/wazuh#/health-check"
@@ -251,5 +251,8 @@ sudo bash -c "cat > $filebeat_zeek_module_config_file" << EOF
     enabled: true
     var.paths: ["$zeek_log_path/x509.log"]
 EOF
+
+sudo chmod -R 755 /opt/filebeat-7.14.2-linux-x86_64
+sudo chown -R root:root /opt/filebeat-7.14.2-linux-x86_64/module
 
 reboot
